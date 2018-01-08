@@ -1,6 +1,6 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.6
+FROM berndverst/uwsgi-nginx-falcon
 
-MAINTAINER Sebastian Ramirez <tiangolo@gmail.com>
+MAINTAINER Bernd Verst <bverst@gmail.com>
 
 # If STATIC_INDEX is 1, serve / with /static/index.html directly (or the static URL configured)
 ENV STATIC_INDEX 1

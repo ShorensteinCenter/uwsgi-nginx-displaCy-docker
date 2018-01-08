@@ -1,14 +1,24 @@
-from flask import Flask, send_file
-app = Flask(__name__)
+import falcon
 
-@app.route("/hello")
-def hello():
-    return "Hello World from Flask in a uWSGI Nginx Docker container with \
-     Python 3.6 (default)"
 
-@app.route("/")
-def main():
-    return send_file('./static/index.html')
+class HelloWorldResource:
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=80)
+    def on_get(self, request, response):
+
+        response.media = ('Hello World from Falcon in a uWSGI Nginx Docker' +
+                          ' container with Python 3.6')
+
+
+class StaticResource:
+
+    def on_get(self, request, response):
+
+        response.status = falcon.HTTP_200
+        response.content_type = 'text/html'
+        with open('static/index.html', 'r') as f:
+            response.body = f.read()
+
+
+app = falcon.API()
+app.add_route('/', StaticResource())
+app.add_route('/hello', HelloWorldResource())

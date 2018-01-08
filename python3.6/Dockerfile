@@ -1,8 +1,8 @@
 FROM tiangolo/uwsgi-nginx:python3.6
 
-MAINTAINER Sebastian Ramirez <tiangolo@gmail.com>
+MAINTAINER Bernd Verst <bverst@gmail.com>
 
-RUN pip install flask
+RUN pip install falcon
 
 # By default, allow unlimited file sizes, modify it to limit the file sizes
 # To have a maximum of 1 MB (Nginx's default) change the line to:

@@ -1,11 +1,13 @@
-from flask import Flask
-app = Flask(__name__)
+import falcon
 
 
-@app.route("/")
-def hello():
-    return "Hello World from Flask in a uWSGI Nginx Docker container with \
-     Python 3.6 (default)"
+class HelloWorldResource:
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=80)
+    def on_get(self, request, response):
+
+        response.media = ('Hello World from Falcon in a uWSGI Nginx Docker' +
+                          ' container with Python 3.6')
+
+
+app = falcon.API()
+app.add_route('/', HelloWorldResource())

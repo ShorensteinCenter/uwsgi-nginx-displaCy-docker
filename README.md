@@ -17,330 +17,38 @@
 * [`flask-python2.7` _(Dockerfile)_](https://github.com/tiangolo/uwsgi-nginx-flask-docker/blob/master/python2.7/Dockerfile)
 
 
-# uwsgi-nginx-flask
+# uwsgi-nginx-falcon
 
-**Docker** image with **uWSGI** and **Nginx** for **Flask** web applications in **Python 3.6**, **Python 3.5** and **Python 2.7** running in a single container.
+**Docker** image with **uWSGI** and **Nginx** for **Falcon** web applications in **Python 3.6** running in a single container.
 
 ## Description
 
-This [**Docker**](https://www.docker.com/) image allows you to create [**Flask**](http://flask.pocoo.org/) web applications in [**Python**](https://www.python.org/) that run with [**uWSGI**](https://uwsgi-docs.readthedocs.org/en/latest/) and [**Nginx**](http://nginx.org/en/) in a single container.
+This [**Docker**](https://www.docker.com/) image allows you to create [**Falcon**](https://falconframework.org/) web applications in [**Python**](https://www.python.org/) that run with [**uWSGI**](https://uwsgi-docs.readthedocs.org/en/latest/) and [**Nginx**](http://nginx.org/en/) in a single container.
 
 uWSGI with Nginx is one of the best ways to deploy a Python web application, so you you should have a [good performance (check the benchmarks)](http://nichol.as/benchmark-of-python-web-servers) with this image.
 
-**GitHub repo**: <https://github.com/tiangolo/uwsgi-nginx-flask-docker>
+**GitHub repo**: <https://github.com/berndverst/uwsgi-nginx-falcon-docker>
 
-**Docker Hub image**: <https://hub.docker.com/r/tiangolo/uwsgi-nginx-flask/>
+**Docker Hub image**: <https://hub.docker.com/r/berndverst/uwsgi-nginx-falcon/>
 
 ## Examples (project templates)
 
-* **`python3.6`** tag: general Flask web application: 
+* **`python3.6`** tag: general Falcon web application
 
-[**example-flask-python3.6.zip**](<https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.5/example-flask-python3.6.zip>)
-
-* **`python3.6`** tag: general Flask web application, structured as a package, for bigger Flask projects, with different submodules. Use it only as an example of how to import your modules and how to structure your own project:
-
-[**example-flask-package-python3.6.zip**](<https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.5/example-flask-package-python3.6.zip>)
-
-* **`python3.6-index`** tag: `static/index.html` served directly in `/`, e.g. for Angular, React, or any other Single-Page Application that uses a static `index.html`, not modified by Python: 
-
-[**example-flask-python3.6-index.zip**](<https://github.com/tiangolo/uwsgi-nginx-flask-docker/releases/download/v0.3.5/example-flask-python3.6-index.zip>)
+* **`python3.6-index`** tag: `static/index.html` served directly in `/`, e.g. for Angular, React, or any other Single-Page Application that uses a static `index.html`, not modified by Python
 
 ## General Instructions
 
 You don't have to clone this repo, you should be able to use this image as a base image for your project with something in your `Dockerfile` like:
 
 ```Dockerfile
-FROM tiangolo/uwsgi-nginx-flask:python3.6
+FROM berndverst/uwsgi-nginx-falcon:python3.6
 
 COPY ./app /app
 ```
-
-There are several image tags available for Python 3.6, Python 3.5 and Python 2.7, but for new projects you should use **Python 3.6**. 
-
-As of now, [everyone](https://www.python.org/dev/peps/pep-0373/) [should be](http://flask.pocoo.org/docs/0.12/python3/#python3-support) [using **Python 3**](https://docs.djangoproject.com/en/1.11/faq/install/#what-python-version-should-i-use-with-django).
-
-There are several template projects that you can download (as a `.zip` file) to bootstrap your project in the section "**Examples (project templates)**" above.
 
 This Docker image is based on [**tiangolo/uwsgi-nginx**](https://hub.docker.com/r/tiangolo/uwsgi-nginx/). That Docker image has uWSGI and Nginx installed in the same container and was made to be the base of this image.
 
-
-## QuickStart
-
-**Note**: You can download the **example-flask-python3.6.zip** project example and use it as the template for your project from the section **Examples** above.
-
----
-
-Or you may follow the instructions to build your project from scratch:
-
-* Go to your project directory
-* Create a `Dockerfile` with:
-
-```Dockerfile
-FROM tiangolo/uwsgi-nginx-flask:python3.6
-
-COPY ./app /app
-```
-
-* Create an `app` directory and enter in it
-* Create a `main.py` file (it should be named like that and should be in your `app` directory) with:
-
-```python
-from flask import Flask
-app = Flask(__name__)
-
-@app.route("/")
-def hello():
-    return "Hello World from Flask"
-
-if __name__ == "__main__":
-    # Only for debugging while developing
-    app.run(host='0.0.0.0', debug=True, port=80)
-```
-
-the main application object should be named `app` (in the code) as in this example.
-
-**Note**: The section with the `main()` function is for debugging purposes. To learn more, read the **Advanced instructions** below.
-
-* You should now have a directory structure like:
-
-```
-.
-├── app
-│   └── main.py
-└── Dockerfile
-```
-
-* Go to the project directory (in where your `Dockerfile` is, containing your `app` directory)
-* Build your Flask image:
-
-```bash
-docker build -t myimage .
-```
-
-* Run a container based on your image:
-
-```bash
-docker run -d --name mycontainer -p 80:80 myimage
-```
-
-...and you have an optimized Flask server in a Docker container.
-
-You should be able to check it in your Docker container's URL, for example: <http://192.168.99.100/>
-
-
-## QuickStart for SPAs
-
-This section explains how to configure the image to serve the contents of `/static/index.html` directly when the browser requests `/`.
-
-This is specially helpful (and efficient) if you are building a Single-Page Application (SPA) with JavaScript (Angular, React, etc) and you want the `index.html` to be served directly, without modifications by Python or Jinja2 templates. And you want to use Flask mainly as an API / back end for your SPA front end.
-
-**Note**: You can download the example project **example-flask-python3.6-index.zip** and use it as the template for your project in the **Examples** section above.
-
----
-
-Or you may follow the instructions to build your project from scratch (it's very similar to the procedure above):
-
-* Go to your project directory
-* Create a `Dockerfile` with:
-
-```Dockerfile
-FROM tiangolo/uwsgi-nginx-flask:python3.6
-
-ENV STATIC_INDEX 1
-
-COPY ./app /app
-```
-
-* Create an `app` directory and enter in it
-* Create a `main.py` file (it should be named like that and should be in your `app` directory) with:
-
-```python
-from flask import Flask, send_file
-app = Flask(__name__)
-
-
-@app.route("/hello")
-def hello():
-    return "Hello World from Flask"
-
-
-@app.route("/")
-def main():
-    index_path = os.path.join(app.static_folder, 'index.html')
-    return send_file(index_path)
-
-
-# Everything not declared before (not a Flask route / API endpoint)...
-@app.route('/<path:path>')
-def route_frontend(path):
-    # ...could be a static file needed by the front end that
-    # doesn't use the `static` path (like in `<script src="bundle.js">`)
-    file_path = os.path.join(app.static_folder, path)
-    if os.path.isfile(file_path):
-        return send_file(file_path)
-    # ...or should be handled by the SPA's "router" in front end
-    else:
-        index_path = os.path.join(app.static_folder, 'index.html')
-        return send_file(index_path)
-
-
-if __name__ == "__main__":
-    # Only for debugging while developing
-    app.run(host='0.0.0.0', debug=True, port=80)
-```
-
-the main application object should be named `app` (in the code) as in this example.
-
-**Note**: The section with the `main()` function is for debugging purposes. To learn more, read the **Advanced instructions** below.
-
-* Make sure you have an `index.html` file in `./app/static/index.html`, for example with:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
-<h1>Hello World from HTML</h1>
-</body>
-</html>
-```
-
-* You should now have a directory structure like:
-
-```
-.
-├── app
-│   ├── main.py
-│   └── static
-│       └── index.html
-└── Dockerfile
-```
-
-* Go to the project directory (in where your `Dockerfile` is, containing your `app` directory)
-* Build your Flask image:
-
-```bash
-docker build -t myimage .
-```
-
-* Run a container based on your image:
-
-```bash
-docker run -d --name mycontainer -p 80:80 myimage
-```
-
-...and you have an optimized Flask server in a Docker container. Also optimized to serve your main static `index.html` page.
-
-* Now, when you go to your Docker container URL, for example: <http://192.168.99.100/>, you will see your `index.html` as if you were in <http://192.168.99.100/static/index.html>.
-
-* You should be able to also go to, for example, <http://192.168.99.100/hello> to see a "Hello World" page served by Flask.
-
-**Note**: As your `index.html` file will be served from `/` and from `/static/index.html`, it would be better to have absolute paths in the links to other files in the `static` directory from your `index.html` file. As in `/static/css/styles.css` instead of relative paths as in `./css/styles.css`. But still, above you added code in your `main.py` to handle that too, just in case.
-
-## QuickStart for bigger projects structured as a Python package
-
-**Note**: You can download the **example-flask-package-python3.6.zip** project example and use it as an example or template for your project from the section **Examples** above.
-
----
-
-You should be able to follow the same instructions as in the "**QuickStart**" section above, with some minor modifications:
-
-* Instead of putting your code in the `app/` directory, put it in a directory `app/app/`.
-* Add an empty file `__init__.py` inside of that `app/app/` directory.
-* Add a file `uwsgi.ini` inside your `app/` directory (that is copied to `/app/uwsgi.ini` inside the container).
-* In your `uwsgi.ini` file, add:
-
-```ini
-[uwsgi]
-module = app.main
-callable = app
-```
-
-The explanation of the `uwsgi.ini` is as follows:
-
-* The module in where my Python web app lives is `app.main`. So, in the package `app` (`/app/app`), get the `main` module (`main.py`).
-* The Flask web application is the `app` object (`app = Flask(__name__)`).
-
-Your file structure would look like:
-
-```
-.
-├── app
-│   ├── app
-│   │   ├── __init__.py
-│   │   ├── main.py
-│   └── uwsgi.ini
-└── Dockerfile
-```
-
-...instead of:
-
-```
-.
-├── app
-│   ├── main.py
-└── Dockerfile
-```
-
-...after that, everything should work as expected. All the other instructions would apply normally.
-
-### Working with submodules
-
-* After adding all your modules you could end up with a file structure similar to (taken from the example project):
-
-```
-.
-├── app
-│   ├── app
-│   │   ├── api
-│   │   │   ├── api.py
-│   │   │   ├── endpoints
-│   │   │   │   ├── __init__.py
-│   │   │   │   └── user.py
-│   │   │   ├── __init__.py
-│   │   │   └── utils.py
-│   │   ├── core
-│   │   │   ├── app_setup.py
-│   │   │   ├── database.py
-│   │   │   └── __init__.py
-│   │   ├── __init__.py
-│   │   ├── main.py
-│   │   └── models
-│   │       ├── __init__.py
-│   │       └── user.py
-│   └── uwsgi.ini
-└── Dockerfile
-```
-
-* Make sure you follow [the offical docs while importing your modules](https://docs.python.org/3/tutorial/modules.html#intra-package-references):
-
-* For example, if you are in `app/app/main.py` and want to import the module in `app/app/core/app_setup.py` you would wirte it like:
-
-```python
-from .core import app_setup
-```
-
-or 
-
-```python
-from app.core import app_setup
-```
-
-
-* And if you are in `app/app/api/endpoints/user.py` and you want to import the `users` object from `app/app/core/database.py` you would write it like:
-
-```python
-from ...core.database import users
-```
-
-or
-
-```python
-from app.core.database import users
-```
 
 ## Advanced instructions
 
@@ -377,7 +85,7 @@ To change this behavior, set the `LISTEN_PORT` environment variable. You might a
 You can do that in your `Dockerfile`, it would look something like:
 
 ```Dockerfile
-FROM tiangolo/uwsgi-nginx-flask:python3.6
+FROM tiangolo/uwsgi-nginx-falcon:python3.6
 
 ENV LISTEN_PORT 8080
 
