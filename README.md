@@ -1,7 +1,7 @@
 ## Supported tags and respective `Dockerfile` links
 
-* [`python3.6` _(Dockerfile)_](https://github.com/tiangolo/uwsgi-nginx-flask-falcon/blob/master/python3.6/Dockerfile)
-* [`python3.6-index` _(Dockerfile)_](https://github.com/tiangolo/uwsgi-nginx-flask-falcon/blob/master/python3.6-index/Dockerfile)
+* [`python3.6` _(Dockerfile)_](https://github.com/berndverst/uwsgi-nginx-flask-falcon/blob/master/python3.6/Dockerfile)
+* [`python3.6-index` _(Dockerfile)_](https://github.com/berndverst/uwsgi-nginx-flask-falcon/blob/master/python3.6-index/Dockerfile)
 
 # uwsgi-nginx-falcon
 
