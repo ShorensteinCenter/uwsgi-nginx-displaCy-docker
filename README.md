@@ -5,15 +5,15 @@
 
 # uwsgi-nginx-falcon
 
-**Docker** image with **uWSGI** and **Nginx** for **Falcon** web applications in **Python 3.6** running in a single container.
+**Docker** image with **uWSGI** and **Nginx** for the **displaCy** API in **Python 3.6** running in a single container.
 
 ## Description
 
-This [**Docker**](https://www.docker.com/) image allows you to create [**Falcon**](https://falconframework.org/) web applications in [**Python**](https://www.python.org/) that run with [**uWSGI**](https://uwsgi-docs.readthedocs.org/en/latest/) and [**Nginx**](http://nginx.org/en/) in a single container.
+This [**Docker**](https://www.docker.com/) image allows you to run the [**displaCy API**](https://github.com/explosion/spacy-services/tree/master/displacy) in [**Python**](https://www.python.org/) that run with [**uWSGI**](https://uwsgi-docs.readthedocs.org/en/latest/) and [**Nginx**](http://nginx.org/en/) in a single container.
 
 uWSGI with Nginx is one of the best ways to deploy a Python web application, so you you should have a [good performance (check the benchmarks)](http://nichol.as/benchmark-of-python-web-servers) with this image.
 
-**GitHub repo**: <https://github.com/berndverst/uwsgi-nginx-falcon-docker>
+**GitHub repo**: <https://github.com/Shorenste9inCenter/uwsgi-nginx-falcon-docker>
 
 **Docker Hub image**: <https://hub.docker.com/r/berndverst/uwsgi-nginx-falcon/>
 
