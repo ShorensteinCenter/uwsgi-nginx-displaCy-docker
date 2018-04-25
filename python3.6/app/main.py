@@ -1,4 +1,3 @@
-# coding: utf8
 from __future__ import unicode_literals
 
 import hug
@@ -51,10 +50,3 @@ def ent(text: str, model: str):
     doc = nlp(text)
     return [{'start': ent.start_char, 'end': ent.end_char, 'label': ent.label_}
             for ent in doc.ents]
-
-
-if __name__ == '__main__':
-    import waitress
-    app = hug.API(__name__)
-    app.http.add_middleware(CORSMiddleware(app))
-    waitress.serve(__hug_wsgi__, port=8080)
